@@ -3,7 +3,7 @@
 set -e
 
 WORKDIR=${WORKDIR:-/data/nym}
-SERVICE_NAME_MIXNODE=nym-mixnode
+SERVICE_NAME_MIXNODE=${SERVICE_NAME_GATEWAY:-nym-mixnode}
 MIXNODES_DIR=~/.nym/mixnodes/${NAME_MIXNODE}
 FORCE_INIT=${FORCE_INIT:-false}
 
