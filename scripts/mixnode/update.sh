@@ -34,7 +34,7 @@ fi
 if [[ $EXEC_VERSION != $CONFIG_VERSION || $FORCE_INIT == true ]];then 
    
    echo "Stop the service"
-   service nym-mixnode stop
+   service ${SERVICE_NAME_MIXNODE} stop
    mv nym-mixnode-${LATEST_RELEASE} nym-mixnode
 
    echo "Init nym client"
@@ -45,7 +45,7 @@ if [[ $EXEC_VERSION != $CONFIG_VERSION || $FORCE_INIT == true ]];then
    fi
 
    echo "Start the service"
-   service nym-mixnode start
+   service ${SERVICE_NAME_MIXNODE} start
    
    echo "Updated"
 else
