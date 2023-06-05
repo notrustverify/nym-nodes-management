@@ -1,0 +1,41 @@
+---
+- hosts: mixnodes
+  become: yes
+  gather_facts: no
+    
+  tasks:
+
+    - name: check for nym-mixnode exec
+      stat: path="{{ WORKDIR | default('/data/nym') }}"
+      register: nymexecfile
+
+    - name: fail if nym-mixnode not exist
+      fail: msg="nym-mixnode exec doesn't exists"
+      when: not nymexecfile.stat.exists
+
+    - name: update mixnode
+      script: ../scripts/mixnode/update.sh
+      environment:
+        WALLET_ADDRESS: "{{ WALLET_ADDRESS }}"
+        NAME_GATEWAY: "{{ NAME_GATEWAY }}"
+        WORKDIR: "{{ WORKDIR | default('/data/nym') }}"
+        VERSION_DOWNLOAD: "{{ VERSION_DOWNLOAD | default('') }}"
+        SERVICE_NAME_GATEWAY: "{{ SERVICE_NAME_GATEWAY | default('nym-mixnode') }}"
+      register: console
+      changed_when: console.stdout != ""
+
+    - name: check update output
+      debug:
+        msg: "{{ console.stdout_lines }}"
+      when: console.stdout != ""
+
+    - name: checking service status
+      command: systemctl status "{{ item }}"
+      with_items:
+      - nym-mixnode
+      register: result
+      ignore_errors: yes
+      changed_when: false
+    - name: showing nym-mixnode report
+      debug:
+       var: result

@@ -1,0 +1,41 @@
+---
+- hosts: gateways
+  become: yes
+  gather_facts: no
+
+  tasks:
+
+    - name: check for nym-gateway exec
+      stat: path="{{ WORKDIR | default('/data/nym') }}"
+      register: nymexecfile
+
+    - name: fail if nym-gateway not exist
+      fail: msg="nym-gateway exec doesn't exists"
+      when: not nymexecfile.stat.exists
+
+    - name: update mixnode
+      script: ../scripts/gateway/update.sh
+      environment:
+        WALLET_ADDRESS: "{{ WALLET_ADDRESS }}"
+        NAME_GATEWAY: "{{ NAME_GATEWAY }}"
+        WORKDIR: "{{ WORKDIR | default('/data/nym') }}"
+        VERSION_DOWNLOAD: "{{ VERSION_DOWNLOAD | default('') }}"
+        SERVICE_NAME_GATEWAY: "{{ SERVICE_NAME_GATEWAY | default('nym-gateway') }}"
+      register: console
+      changed_when: console.stdout != ""
+
+    - name: check update output
+      debug:
+        msg: "{{ console.stdout_lines }}"
+      when: console.stdout != ""
+
+    - name: checking service status
+      command: systemctl status "{{ item }}"
+      with_items:
+      - nym-gateway
+      register: result
+      ignore_errors: yes
+      changed_when: false
+    - name: showing nym-gateway report
+      debug:
+       var: result

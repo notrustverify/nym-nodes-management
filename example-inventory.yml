@@ -1,0 +1,14 @@
+---
+mixnodes:
+   hosts:
+     <mixnode domain name or ip>:
+        ansible_user: <server user>
+        WALLET_ADDRESS: "<wallet address>"
+        NAME_MIXNODE: "<mixnode name>"
+
+gateways:
+    hosts:
+      <gateway domain name or ip>:
+        ansible_user: <server user>
+        WALLET_ADDRESS: "<wallet address>"
+        NAME_GATEWAY: "<gateway name>"

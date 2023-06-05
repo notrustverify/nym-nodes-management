@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+    
+
+  tasks:
+
+     - name: Update and upgrade apt packages
+       apt:
+         upgrade: yes
+         update_cache: yes
+         cache_valid_time: 86400 #One day
