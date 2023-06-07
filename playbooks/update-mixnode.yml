@@ -38,4 +38,6 @@
       changed_when: false
     - name: showing nym-mixnode report
       debug:
-       var: result
+           msg: "{{ item.stdout_lines }}"
+      loop: "{{ result.results }}"
+

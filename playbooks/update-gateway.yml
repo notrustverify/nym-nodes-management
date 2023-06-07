@@ -37,5 +37,6 @@
       ignore_errors: yes
       changed_when: false
     - name: showing nym-gateway report
-      debug:
-       var: result
+      debug: 
+           msg: "{{ item.stdout_lines }}"
+      loop: "{{ result.results }}"
