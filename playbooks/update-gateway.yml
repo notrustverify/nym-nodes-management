@@ -13,7 +13,7 @@
       fail: msg="nym-gateway exec doesn't exists"
       when: not nymexecfile.stat.exists
 
-    - name: update mixnode
+    - name: update gateway
       script: ../scripts/gateway/update.sh
       environment:
         WALLET_ADDRESS: "{{ WALLET_ADDRESS }}"
