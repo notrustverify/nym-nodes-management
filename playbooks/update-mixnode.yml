@@ -17,10 +17,10 @@
       script: ../scripts/mixnode/update.sh
       environment:
         WALLET_ADDRESS: "{{ WALLET_ADDRESS }}"
-        NAME_GATEWAY: "{{ NAME_GATEWAY }}"
+        NAME_MIXNODE: "{{ NAME_MIXNODE }}"
         WORKDIR: "{{ WORKDIR | default('/data/nym') }}"
         VERSION_DOWNLOAD: "{{ VERSION_DOWNLOAD | default('') }}"
-        SERVICE_NAME_GATEWAY: "{{ SERVICE_NAME_GATEWAY | default('nym-mixnode') }}"
+        SERVICE_NAME_MIXNODE: "{{ SERVICE_NAME_MIXNODE | default('nym-mixnode') }}"
       register: console
       changed_when: console.stdout != ""
 
@@ -40,4 +40,8 @@
       debug:
            msg: "{{ item.stdout_lines }}"
       loop: "{{ result.results }}"
+    - name: Start service if not started
+      service:
+        name: nym-mixnode
+        state: started
 

@@ -40,9 +40,9 @@ if [[ $EXEC_VERSION != $CONFIG_VERSION || $FORCE_INIT == true ]];then
 
    echo "Init nym client"
    if [[ -v ANNOUNCE_HOST ]]; then
-      	./nym-gateway init --id $NAME_GATEWAY  --announce-host $ANNOUNCE_HOST --host 0.0.0.0 --wallet-address $WALLET_ADDRESS
+      	./nym-gateway init --id $NAME_GATEWAY --host 0.0.0.0 
        else
-        ./nym-gateway init --id $NAME_GATEWAY --announce-host $(curl ifconfig.me)  --host 0.0.0.0 --wallet-address $WALLET_ADDRESS
+        ./nym-gateway init --id $NAME_GATEWAY --host 0.0.0.0
    fi
 
    echo "Start the service"

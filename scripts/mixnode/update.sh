@@ -39,9 +39,9 @@ if [[ $EXEC_VERSION != $CONFIG_VERSION || $FORCE_INIT == true ]];then
 
    echo "Init nym client"
    if [[ -v ANNOUNCE_HOST ]]; then
-      	./nym-mixnode init --id $NAME_MIXNODE  --announce-host $ANNOUNCE_HOST --host 0.0.0.0 --wallet-address $WALLET_ADDRESS
+      	./nym-mixnode init --id $NAME_MIXNODE --host 0.0.0.0
        else
-        ./nym-mixnode init --id $NAME_MIXNODE --announce-host $(curl ifconfig.me)  --host 0.0.0.0 --wallet-address $WALLET_ADDRESS
+        ./nym-mixnode init --id $NAME_MIXNODE --host 0.0.0.0
    fi
 
    echo "Start the service"

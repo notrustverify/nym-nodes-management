@@ -40,3 +40,8 @@
       debug: 
            msg: "{{ item.stdout_lines }}"
       loop: "{{ result.results }}"
+    - name: Start service if not started
+      service:
+        name: nym-gateway
+        state: started
+
